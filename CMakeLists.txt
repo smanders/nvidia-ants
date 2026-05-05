@@ -1,18 +1,9 @@
-cmake_minimum_required(VERSION 3.15)
-project(AntGridAPI VERSION 1.0.0 LANGUAGES CXX)
+cmake_minimum_required(VERSION 4.3)
+project(AntGridAPI)
 
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Build type
-if(NOT CMAKE_BUILD_TYPE)
-    set(CMAKE_BUILD_TYPE Release)
-endif()
-
-# Compiler flags
-set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
 
 # Add include directory to include path
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
@@ -46,7 +37,10 @@ target_link_libraries(ant_grid_test
 )
 
 # Installation
+set(targetsFile ${PROJECT_NAME}-targets)
+
 install(TARGETS ant_grid_api ant_grid_example ant_grid_test
+    EXPORT ${targetsFile}
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
     ARCHIVE DESTINATION lib
@@ -54,6 +48,18 @@ install(TARGETS ant_grid_api ant_grid_example ant_grid_test
 
 install(FILES include/ant_grid_api.hpp
     DESTINATION include
+)
+
+xpExternPackage(REPO_NAME nvidia-ants
+  TARGETS_FILE ${targetsFile}
+  LIBRARIES ant_grid_api
+  BASE v0 XPDIFF "intro"
+  WEB "https://github.com/smanders/nvidia-ants"
+  DESC "Ant Grid API library for C++"
+)
+
+install(EXPORT ${targetsFile}
+    DESTINATION ${CMAKE_INSTALL_CMAKEDIR}
 )
 
 # Custom target to run tests

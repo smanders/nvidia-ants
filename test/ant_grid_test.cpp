@@ -104,7 +104,7 @@ void test_configuration() {
     // Deploy ant and run a few steps to ensure no crashes
     auto ant_id_opt = grid->deploy_ant({0, 0});
     assert(ant_id_opt.has_value());
-    int ant_id = ant_id_opt.value();
+    [[maybe_unused]] int ant_id = ant_id_opt.value();
     for (int i = 0; i < 10; ++i) {
         grid->step_simulation();
     }
