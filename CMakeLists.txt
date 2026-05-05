@@ -5,10 +5,6 @@ project(AntGridAPI)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Compiler flags
-set(CMAKE_CXX_FLAGS_DEBUG "-g -O0 -Wall -Wextra")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3 -DNDEBUG")
-
 # Add include directory to include path
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
